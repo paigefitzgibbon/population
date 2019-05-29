@@ -1,0 +1,54 @@
+---
+title: "Population"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+population <- matrix(data =
+            c(0, 0.8, 
+              2, 0.85, 
+              6, 0.65, 
+              1, 0.1),
+            nrow=4, ncol=2, byrow=TRUE)
+
+rownames(population) <- c("Young", "Sub-Adults", "Adult", "Aged")
+colnames(population) <- c("Fertility", "Survivability")
+
+nclasses = 4
+initial = c(0,0,10,0)
+time = 20
+
+source("rabbit_pop.R")
+
+problem1 = rabbit_pop(population[,1], population[,2], initial, time)
+
+
+
+```
+Problem 1:
+After 20 years the population is 3495760 rabbits.
+At the time there are 4111679 young rabbits.
+It takes 12 years for the population to reach over 10,000 rabbits.
+
+
+```{r}
+rabbit_sensitivity <- matrix(data =
+            c(0, 0.25, 
+              2, 0.25, 
+              6, 0.65, 
+              1, 0.1),
+            nrow=4, ncol=2, byrow=TRUE)
+nclasses = 4
+initial = c(0,0,10,0)
+time = 20
+
+rabbit_death = rabbit_pop(rabbit_sensitivity[,1], rabbit_sensitivity[,2], initial, time)
+
+
+```
+
+The population seems stable. This means that as long as predation decreases survivability rate down to 0.25 the rabbit population will not explode. 
